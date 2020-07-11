@@ -1,8 +1,6 @@
+import "./settings";
 import { BotClient } from "./bot";
-import { loadSettings } from "./settings";
 import { squelize } from "./models";
-
-loadSettings();
 
 (async () => {
     try {
