@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  role_picker_bot:
+    build: .
+    restart: always
+    depends_on:
+      - mysql
+    links:
+      - mysql
+  mysql:
+    image: mysql/mysql-server:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'role_picker'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
