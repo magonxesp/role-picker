@@ -9,38 +9,48 @@ import path from "path";
 export class BotClient extends Client {
 
     /**
-     * Bot configuration object
+     * Bot commands array
      *
-     * @type {object}
+     * @type {Array<{fullName: string, command: BotCommand}>}
+     */
+    #commands = [];
+
+    /**
+     * Bot configuration
+     *
+     * @type {Object}
      * @private
      */
-    #config = {};
+    static #config = {};
 
     /**
      * BotClient constructor
      */
     constructor() {
         super();
+        // setup event listeners
         this.on('guildMemberAdd', this.#onGuildMemberAdd);
         this.on('message', this.#onMessage);
-        this.#loadConfig();
     }
 
     /**
      * Load bot configuration
      *
-     * @private
+     * @return {Object}
+     * @throws {Error}
      */
-    #loadConfig() {
+    static loadConfig() {
         const configPath = path.join(root, 'config', 'config.json');
 
-        if (this.#config == null) {
-            if (fs.existsSync(configPath)) {
-                this.#config = require(configPath);
-            } else {
-                throw "config/config.json not exists!";
-            }
+        if (fs.existsSync(configPath)) {
+            BotClient.#config = require(configPath);
+        } else {
+            throw new Error("config/config.json not exists!");
         }
+    }
+
+    static get config() {
+        return BotClient.#config;
     }
 
     /**
@@ -50,8 +60,8 @@ export class BotClient extends Client {
      * @return {string}
      */
     getEventMessage(event) {
-        if (typeof this.#config['messages'][event] !== 'undefined') {
-            return this.#config['messages'][event];
+        if (typeof BotClient.#config['messages'][event] !== 'undefined') {
+            return BotClient.#config['messages'][event];
         }
 
         return '';
@@ -79,9 +89,57 @@ export class BotClient extends Client {
      * @private
      */
     async #onMessage(message) {
-        if (message.content.includes(this.#config.command_prefix, 0)) {
-            await message.channel.send('hola');
+        if (message.content.includes(BotClient.#config.command_prefix)) {
+            const command_args = message.content.split(" ");
+            const command = this.#commands.filter(command => command.fullName === command_args.shift()).shift();
+            await command.command.run(message);
         }
     }
+
+    /**
+     * Set bot commands
+     *
+     * @param {Array<BotCommand>} commands
+     */
+    setCommands(commands) {
+        for (let command of commands) {
+            if (command instanceof BotCommand) {
+                this.#commands.push({
+                    fullName: BotClient.#config.command_prefix + command.name,
+                    command: command
+                });
+            }
+        }
+    }
+
+}
+
+/**
+ * BotCommand class
+ */
+export class BotCommand {
+
+    /**
+     * BotCommand constructor
+     */
+    constructor() {
+        this.commandName = "";
+    }
+
+    /**
+     * Return the command name whitout prefix
+     *
+     * @returns {string}
+     */
+    get name() {
+        return this.commandName;
+    }
+
+    /**
+     * Run command
+     *
+     * @param {Message} message
+     */
+    async run(message) { }
 
 }
