@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  role_picker_bot:
+    build: .
+    restart: always
+    ports:
+      - 9229:9229
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    command:
+      - 'node'
+      - '--inspect=0.0.0.0'
+      - './dist/index.js'
+  mysql:
+    image: mysql/mysql-server:5.7
+    ports:
+    - 3306:3306
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'role_picker'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
