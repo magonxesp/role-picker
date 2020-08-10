@@ -90,9 +90,10 @@ export class BotClient extends Client {
      */
     async #onMessage(message) {
         if (message.content.includes(BotClient.#config.command_prefix)) {
-            const command_args = message.content.split(" ");
-            const command = this.#commands.filter(command => command.fullName === command_args.shift()).shift();
-            await command.command.run(message);
+            const commandArgs = message.content.split(" ");
+            const commandName = commandArgs.shift(); // get command name and remove of args array
+            const command = this.#commands.filter(command => command.fullName === commandName).shift();
+            await command.command.run(message, commandArgs);
         }
     }
 
@@ -139,7 +140,8 @@ export class BotCommand {
      * Run command
      *
      * @param {Message} message
+     * @param {Array<string>} args
      */
-    async run(message) { }
+    async run(message, args) { }
 
 }
