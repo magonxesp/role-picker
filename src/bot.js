@@ -60,8 +60,8 @@ export class BotClient extends Client {
      * @return {string}
      */
     getEventMessage(event) {
-        if (typeof BotClient.#config['messages'][event] !== 'undefined') {
-            return BotClient.#config['messages'][event];
+        if (typeof BotClient.#config['events_responses'][event] !== 'undefined') {
+            return BotClient.#config['events_responses'][event];
         }
 
         return '';
@@ -143,5 +143,16 @@ export class BotCommand {
      * @param {Array<string>} args
      */
     async run(message, args) { }
+
+    /**
+     * Get command response messages strings
+     *
+     * @param {string} commandClass
+     *
+     * @return {object}
+     */
+    getResponseMessages(commandClass) {
+        return BotClient.config["command_responses"][commandClass];
+    }
 
 }

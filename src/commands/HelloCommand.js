@@ -1,11 +1,11 @@
-import {BotCommand} from "../bot";
+import { BotCommand } from "../bot";
 
 
 export default class HelloCommand extends BotCommand {
 
     constructor() {
         super();
-        this.commandName = "hello";
+        this.commandName = 'hello';
     }
 
     async run(message, args) {

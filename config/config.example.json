@@ -1,6 +1,13 @@
 {
-  "messages": {
+  "command_prefix": "t!",
+  "events_responses": {
     "onGuildMemberAdd": "",
     "onSetRole": ""
+  },
+  "command_responses": {
+    "SelectChannel": {
+      "success": "",
+      "error": ""
+    }
   }
 }
