@@ -105,6 +105,8 @@ export class BotClient extends Client {
     setCommands(commands) {
         for (let command of commands) {
             if (command instanceof BotCommand) {
+                command.onLoad();
+
                 this.#commands.push({
                     fullName: BotClient.#config.command_prefix + command.name,
                     command: command
@@ -135,6 +137,11 @@ export class BotCommand {
     get name() {
         return this.commandName;
     }
+
+    /**
+     * On command loaded
+     */
+    onLoad() { }
 
     /**
      * Run command

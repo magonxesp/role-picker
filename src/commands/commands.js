@@ -1,7 +1,21 @@
 import HelloCommand from "./HelloCommand";
 import SelectChannelCommand from './SelectChannelCommand';
 
-export const commands = [
+/**
+ * Bot commands
+ *
+ * @type {Array<BotCommand>}
+ */
+const commands = [
     new HelloCommand(),
     new SelectChannelCommand(),
 ];
+
+/**
+ * Get the bot commands instances
+ *
+ * @return {Array<BotCommand>}
+ */
+export default function botCommands() {
+    return commands;
+}
