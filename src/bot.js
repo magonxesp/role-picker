@@ -2,6 +2,7 @@ import { Client } from "discord.js";
 import { root } from "./settings";
 import fs from "fs";
 import path from "path";
+import {ServerTextChannel} from "./models";
 
 /**
  * BotClient Class
@@ -29,7 +30,6 @@ export class BotClient extends Client {
     constructor() {
         super();
         // setup event listeners
-        this.on('guildMemberAdd', this.#onGuildMemberAdd);
         this.on('message', this.#onMessage);
     }
 
@@ -59,26 +59,22 @@ export class BotClient extends Client {
      * @param {string} event
      * @return {string}
      */
-    getEventMessage(event) {
-        if (typeof BotClient.#config['events_responses'][event] !== 'undefined') {
-            return BotClient.#config['events_responses'][event];
+    static getEventMessage(event) {
+        if (typeof BotClient.config['events_responses'][event] !== 'undefined') {
+            return BotClient.config['events_responses'][event];
         }
 
         return '';
     }
 
     /**
-     * Guild member add event
+     * Setup Event handlers
      *
-     * @param {GuildMember} member
-     * @private
+     * @param {Array<{event: any, handler: EventHandler}>} handlers
      */
-    async #onGuildMemberAdd(member) {
-        let message = this.getEventMessage('onGuildMemberAdd');
-        const roles = await member.guild.roles.cache;
-
-        if (message) {
-            message += `: ${roles.array().join(', ')}`;
+    setupEventListeners(handlers) {
+        for (let eventHandler of handlers) {
+            this.on(eventHandler.event, eventHandler.handler.handle)
         }
     }
 
