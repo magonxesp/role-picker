@@ -1,6 +1,6 @@
 import { BotCommand } from '../bot';
-import { rolesNames } from "../helpers";
-import { sprintf } from 'sprintf-js';
+import { roleFilter } from "../helpers";
+
 
 export default class RoleListCommand extends BotCommand {
 
@@ -21,7 +21,17 @@ export default class RoleListCommand extends BotCommand {
     async run(message, args) {
         let roles = message.guild.roles.cache.array();
 
-        await message.channel.send(sprintf(this.#messages['success'], { roles: roles }));
+        await message.channel.send({
+            embed: {
+                color: 16777215,
+                fields: [
+                    {
+                        name: this.#messages['success'],
+                        value: roles.filter(roleFilter).join('\n')
+                    }
+                ]
+            }
+        });
     }
 
 }

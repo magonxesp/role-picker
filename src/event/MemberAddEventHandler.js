@@ -1,8 +1,8 @@
 import { BotClient } from "../bot";
 import { ServerTextChannel } from "../models";
 import EventHandler from "./EventHandler";
-import { rolesNames } from "../helpers";
-import { sprintf } from 'sprintf-js';
+import { roleFilter } from "../helpers";
+
 
 export default class MemberAddEventHandler extends EventHandler {
 
@@ -43,9 +43,17 @@ export default class MemberAddEventHandler extends EventHandler {
                 const channel = member.guild.channels.cache.get(channelId);
 
                 if (channel) {
-                    await channel.send(sprintf(message, {
-                        roles: rolesNames(roles).join(', ')
-                    }));
+                    await channel.send({
+                        embed: {
+                            color: 16777215,
+                            fields: [
+                                {
+                                    name: message,
+                                    value: roles.filter(roleFilter).join('\n')
+                                }
+                            ]
+                        }
+                    });
                 }
             }
         }
