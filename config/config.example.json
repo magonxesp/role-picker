@@ -12,6 +12,12 @@
     },
     "RoleListCommand": {
       "success": ""
+    },
+    "SelectRoleCommand": {
+      "success": ""
+    },
+    "RemoveRoleCommand": {
+      "success": ""
     }
   }
 }

@@ -18,6 +18,7 @@ Variables are parsed by sprintf, see more: https://github.com/alexei/sprintf.js
 |:-----|:-----|:-----------------------|:------|
 | role | string | <ul><li>events_responses.onSetRole</li></ul> | ``%(role)s`` |
 | roles | string | <ul><li>events_responses.onGuildMemberAdd</li><li>command_responses.RoleListCommand.success</li></ul> | ``%(roles)s`` |
+| user | string | <ul><li>command_responses.SelectRoleCommand.success</li><li>command_responses.RemoveRoleCommand.success</li></ul> | ``%(user)s`` |
 
 ## Run
 Build and run using ``docker-compose``
