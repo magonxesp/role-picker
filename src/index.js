@@ -1,6 +1,8 @@
 import "./settings";
-import { botBootstrap } from "./bot";
 import { squelize } from "./models";
+import getEvents from "./event/events";
+import botCommands from "./commands/commands";
+import { bot, BotClient } from "./bot";
 
 (async () => {
     try {
@@ -8,8 +10,14 @@ import { squelize } from "./models";
         await squelize.authenticate();
         // create tables if not exists
         await squelize.sync();
-        // bot boostrap
-        botBootstrap();
+        // load bot configuration
+        BotClient.loadConfig();
+        // setup event listeners
+        bot.setupEventListeners(getEvents());
+        // set bot commands
+        bot.setCommands(botCommands());
+        // bot login
+        bot.login(process.env.TOKEN);
     } catch (error) {
         console.error("Error on bot start: " + error);
     }

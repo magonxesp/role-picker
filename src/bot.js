@@ -2,8 +2,7 @@ import { Client } from "discord.js";
 import { root } from "./settings";
 import fs from "fs";
 import path from "path";
-import getEvents from "./event/events";
-import botCommands from "./commands/commands";
+
 
 /**
  * BotClient Class
@@ -55,6 +54,15 @@ export class BotClient extends Client {
     }
 
     /**
+     * Get bot commands
+     *
+     * @returns {Array<{fullName: string, command: BotCommand}>}
+     */
+    get commands() {
+        return this.#commands;
+    }
+
+    /**
      * Get Event Message
      *
      * @param {string} event
@@ -90,7 +98,10 @@ export class BotClient extends Client {
             const commandArgs = message.content.split(" ");
             const commandName = commandArgs.shift(); // get command name and remove of args array
             const command = this.#commands.filter(command => command.fullName === commandName).shift();
-            await command.command.run(message, commandArgs);
+
+            if (typeof command !== 'undefined') {
+                await command.command.run(message, commandArgs);
+            }
         }
     }
 
@@ -183,17 +194,3 @@ export class BotCommand {
  * @type {BotClient}
  */
 export const bot = new BotClient();
-
-/**
- * Setup bot and login
- */
-export function botBootstrap() {
-    // load bot configuration
-    BotClient.loadConfig();
-    // setup event listeners
-    bot.setupEventListeners(getEvents());
-    // set bot commands
-    bot.setCommands(botCommands());
-    // bot login
-    bot.login(process.env.TOKEN);
-}
