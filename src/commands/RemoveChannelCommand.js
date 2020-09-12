@@ -2,23 +2,23 @@ import { BotCommand } from "../bot";
 import { ServerTextChannel } from "../models";
 
 
-export default class SelectChannelCommand extends BotCommand {
+export default class RemoveChannelCommand extends BotCommand {
 
     #messages = {};
 
     get name() {
-        return "listen";
+        return "off";
     }
 
     get description() {
-        return "Enseña la lista de roles disponibles a un miembro nuevo en este canal";
+        return "Desactiva el evento de enseñar los roles disponibles a un miembro nuevo en este canal";
     }
 
     onLoad() {
-        this.#messages = this.getResponseMessages('SelectChannelCommand');
+        this.#messages = this.getResponseMessages('RemoveChannelCommand');
     }
 
-    async saveChannel(channelId, serverId) {
+    async removeChannel(channelId, serverId) {
         const channel = await ServerTextChannel.findOne({
             where: {
                 channelId: channelId,
@@ -26,11 +26,8 @@ export default class SelectChannelCommand extends BotCommand {
             }
         });
 
-        if (channel === null) {
-            await ServerTextChannel.create({
-                channelId: channelId,
-                serverId: serverId
-            });
+        if (channel != null) {
+            await channel.destroy();
 
             return true;
         }
@@ -41,12 +38,10 @@ export default class SelectChannelCommand extends BotCommand {
     async run(message, args) {
         try {
             if (message.member.hasPermission("ADMINISTRATOR")) {
-                const saved = await this.saveChannel(message.channel.id, message.guild.id);
+                const removed = await this.removeChannel(message.channel.id, message.guild.id);
 
-                if (saved) {
+                if (removed) {
                     await message.channel.send(this.#messages.success);
-                } else {
-                    await message.channel.send(this.#messages.in_use);
                 }
             }
         } catch (exception) {

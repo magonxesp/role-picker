@@ -18,6 +18,10 @@
     },
     "RemoveRoleCommand": {
       "success": ""
+    },
+    "RemoveChannelCommand": {
+      "success": "",
+      "error": ""
     }
   }
 }
