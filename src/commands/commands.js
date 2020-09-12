@@ -1,5 +1,8 @@
 import HelloCommand from "./HelloCommand";
 import SelectChannelCommand from './SelectChannelCommand';
+import SelectRoleCommand from "./SelectRoleCommand";
+import HelpCommand from "./HelpCommand";
+import RoleListCommand from "./RoleListCommand";
 
 /**
  * Bot commands
@@ -9,6 +12,9 @@ import SelectChannelCommand from './SelectChannelCommand';
 const commands = [
     new HelloCommand(),
     new SelectChannelCommand(),
+    new SelectRoleCommand(),
+    new RoleListCommand(),
+    new HelpCommand()
 ];
 
 /**

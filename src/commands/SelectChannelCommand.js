@@ -6,9 +6,12 @@ export default class SelectChannelCommand extends BotCommand {
 
     #messages = {};
 
-    constructor() {
-        super();
-        this.commandName = 'select';
+    get name() {
+        return "listen";
+    }
+
+    get description() {
+        return "Enseña la lista de roles disponibles a un miembro nuevo en este canal";
     }
 
     onLoad() {
