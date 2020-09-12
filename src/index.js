@@ -20,6 +20,7 @@ import { bot, BotClient } from "./bot";
         bot.login(process.env.TOKEN);
     } catch (error) {
         console.error("Error on bot start: " + error);
+        process.exit(1);
     }
 })();
 
