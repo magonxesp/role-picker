@@ -30,5 +30,26 @@ export function rolesNames(roles, embed = false) {
  * @return boolean
  */
 export function roleFilter(role) {
-    return role.name.charAt(0) !== '@';
+    return !role.deleted && role.name.charAt(0) !== '@';
+}
+
+/**
+ * Parse role from command argument
+ *
+ * @param {string} roleNameArgument
+ * @param {Message} message
+ *
+ * @return {Role}
+ */
+export function parseRoleArgument(roleNameArgument, message) {
+    let matches = null;
+    let role;
+
+    if ((matches = /^<@&(\d+)>$/.exec(roleNameArgument)) != null) {
+        role = message.guild.roles.cache.find(role => role.id === matches[1]);
+    } else {
+        role = message.guild.roles.cache.find(role => role.name === roleNameArgument);
+    }
+
+    return role;
 }
