@@ -21,3 +21,14 @@ export const ServerTextChannel = squelize.define('ServerTextChannel', {
         allowNull: false
     }
 });
+
+export const RolesExcluded = squelize.define('RolesExcluded', {
+    serverId: {
+        type: DataTypes.BIGINT,
+        allowNull: false
+    },
+    roleId: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
+});
