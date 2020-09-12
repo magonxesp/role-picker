@@ -12,7 +12,41 @@ export default class HelpCommand extends BotCommand {
         return "Listado de comandos";
     }
 
-    async run(message, args) {
+    get usage() {
+        return this.arguments([
+            {
+                name: 'comando',
+                required: false
+            }
+        ]);
+    }
+
+    /**
+     * Send command usage
+     *
+     * @param {string} commandName
+     * @param {Message} message
+     *
+     * @return {Promise<void>}
+     */
+    async #commandHelp(commandName, message) {
+        const command = bot.commands.filter((command) => command.fullName === commandName)[0];
+
+        if (command != null) {
+            let help = `\`\`\`${command.fullName} ${command.command.usage}\`\`\``;
+
+            await message.channel.send(help);
+        }
+    }
+
+    /**
+     * Send command list
+     *
+     * @param {Message} message
+     *
+     * @return {Promise<void>}
+     */
+    async #commandList(message) {
         let help = ``;
 
         for (let command of bot.commands) {
@@ -32,6 +66,14 @@ export default class HelpCommand extends BotCommand {
                 ]
             }
         });
+    }
+
+    async run(message, args) {
+        if (args.length > 0) {
+            await this.#commandHelp(args[0], message);
+        } else {
+            await this.#commandList(message);
+        }
     }
 
 }

@@ -160,6 +160,16 @@ export class BotCommand {
     }
 
     /**
+     * Return the usage of the command
+     *
+     * @abstract
+     * @returns {string}
+     */
+    get usage() {
+        return '';
+    }
+
+    /**
      * On command loaded
      */
     onLoad() { }
@@ -184,6 +194,25 @@ export class BotCommand {
      */
     getResponseMessages(commandClass) {
         return BotClient.config["command_responses"][commandClass];
+    }
+
+    /**
+     * Returns command arguments help
+     *
+     * @param {Array<{name: string, required: boolean}>} args
+     */
+    arguments(args) {
+        let help = [];
+
+        for (let arg of args) {
+            if (arg.required) {
+                help.push(`${arg.name}`);
+            } else {
+                help.push(`[${arg.name}]`);
+            }
+        }
+
+        return help.join(' ');
     }
 
 }
