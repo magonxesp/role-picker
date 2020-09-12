@@ -16,7 +16,7 @@ Variables are parsed by sprintf, see more: https://github.com/alexei/sprintf.js
 
 | Name | Type | config.json properties | Usage |
 |:-----|:-----|:-----------------------|:------|
-| role | string | <ul><li>events_responses.onSetRole</li><li>command_responses.SelectRoleCommand.success</li><li>command_responses.RemoveRoleCommand.success</li><li>command_responses.ExcludeRoleCommand.success</li></ul> | ``%(role)s`` |
+| role | string | <ul><li>events_responses.onSetRole</li><li>command_responses.SelectRoleCommand.success</li><li>command_responses.RemoveRoleCommand.success</li><li>command_responses.ExcludeRoleCommand.success</li><li>command_responses.IncludeRoleCommand.success</li></ul> | ``%(role)s`` |
 | roles | string | <ul><li>events_responses.onGuildMemberAdd</li><li>command_responses.RoleListCommand.success</li></ul> | ``%(roles)s`` |
 | user | string | <ul><li>command_responses.SelectRoleCommand.success</li><li>command_responses.RemoveRoleCommand.success</li></ul> | ``%(user)s`` |
 
