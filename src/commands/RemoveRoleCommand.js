@@ -14,6 +14,15 @@ export default class RemoveRoleCommand extends BotCommand {
         return "leave";
     }
 
+    get usage() {
+        return this.arguments([
+            {
+                name: 'rol',
+                required: true
+            }
+        ]);
+    }
+
     onLoad() {
         this.#messages = this.getResponseMessages('RemoveRoleCommand');
     }

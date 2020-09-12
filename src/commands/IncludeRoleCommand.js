@@ -16,6 +16,15 @@ export default class IncludeRoleCommand extends BotCommand {
         return "include";
     }
 
+    get usage() {
+        return this.arguments([
+            {
+                name: 'rol',
+                required: true
+            }
+        ]);
+    }
+
     onLoad() {
         this.#messages = this.getResponseMessages('IncludeRoleCommand');
     }

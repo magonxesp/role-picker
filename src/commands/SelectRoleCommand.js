@@ -14,6 +14,15 @@ export default class SelectRoleCommand extends BotCommand {
         return "join";
     }
 
+    get usage() {
+        return this.arguments([
+            {
+                name: 'rol',
+                required: true
+            }
+        ]);
+    }
+
     onLoad() {
         this.#messages = this.getResponseMessages('SelectRoleCommand');
     }

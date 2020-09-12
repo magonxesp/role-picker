@@ -16,6 +16,15 @@ export default class ExcludeRoleCommand extends BotCommand {
         return "exclude";
     }
 
+    get usage() {
+        return this.arguments([
+            {
+                name: 'rol',
+                required: true
+            }
+        ]);
+    }
+
     onLoad() {
         this.#messages = this.getResponseMessages('ExcludeRoleCommand');
     }
