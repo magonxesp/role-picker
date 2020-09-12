@@ -1,7 +1,7 @@
 import { BotClient } from "../bot";
 import { ServerTextChannel } from "../models";
 import EventHandler from "./EventHandler";
-import { roleFilter } from "../helpers";
+import { asyncRoleFilter } from "../helpers";
 
 
 export default class MemberAddEventHandler extends EventHandler {
@@ -49,7 +49,7 @@ export default class MemberAddEventHandler extends EventHandler {
                             fields: [
                                 {
                                     name: message,
-                                    value: roles.filter(roleFilter).join('\n')
+                                    value: (await asyncRoleFilter(roles, member.guild.id)).join('\n')
                                 }
                             ]
                         }

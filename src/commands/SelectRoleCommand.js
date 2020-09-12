@@ -1,6 +1,6 @@
 import { BotCommand } from "../bot";
 import { sprintf } from "sprintf-js";
-import { parseRoleArgument } from "../helpers";
+import {parseRoleArgument, rolesExcluded} from "../helpers";
 
 export default class SelectRoleCommand extends BotCommand {
 
@@ -23,8 +23,9 @@ export default class SelectRoleCommand extends BotCommand {
 
         try {
             const member = message.member;
+            const excluded = await rolesExcluded(message.guild.id);
 
-            if (role != null) {
+            if (role != null && !excluded.includes(role.id)) {
                 await member.roles.add(role);
 
                 await message.channel.send(sprintf(this.#messages['success'], {

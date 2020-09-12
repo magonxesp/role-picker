@@ -5,6 +5,7 @@ import HelpCommand from "./HelpCommand";
 import RoleListCommand from "./RoleListCommand";
 import RemoveRoleCommand from "./RemoveRoleCommand";
 import RemoveChannelCommand from "./RemoveChannelCommand";
+import ExcludeRoleCommand from "./ExcludeRoleCommand";
 
 /**
  * Bot commands
@@ -18,7 +19,8 @@ const commands = [
     new RoleListCommand(),
     new HelpCommand(),
     new RemoveRoleCommand(),
-    new RemoveChannelCommand()
+    new RemoveChannelCommand(),
+    new ExcludeRoleCommand()
 ];
 
 /**

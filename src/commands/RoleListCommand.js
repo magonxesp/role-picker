@@ -1,5 +1,5 @@
 import { BotCommand } from '../bot';
-import { roleFilter } from "../helpers";
+import { asyncRoleFilter } from "../helpers";
 
 
 export default class RoleListCommand extends BotCommand {
@@ -27,7 +27,7 @@ export default class RoleListCommand extends BotCommand {
                 fields: [
                     {
                         name: this.#messages['success'],
-                        value: roles.filter(roleFilter).join('\n')
+                        value: (await asyncRoleFilter(roles, message.guild.id)).join('\n')
                     }
                 ]
             }

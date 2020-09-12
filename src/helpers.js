@@ -1,3 +1,5 @@
+import { RolesExcluded } from "./models";
+
 /**
  * Returns a clean list of role names
  *
@@ -34,6 +36,24 @@ export function roleFilter(role) {
 }
 
 /**
+ * Return roles array filtered without excluded roles
+ *
+ * @param {Role[]} roles
+ * @param {string|null} guildId
+ *
+ * @returns {Role[]}
+ */
+export async function asyncRoleFilter(roles, guildId = null) {
+    let excluded = [];
+
+    if (guildId != null) {
+        excluded = await rolesExcluded(guildId);
+    }
+
+    return roles.filter((role) => roleFilter(role) && !excluded.includes(role.id));
+}
+
+/**
  * Parse role from command argument
  *
  * @param {string} roleNameArgument
@@ -52,4 +72,31 @@ export function parseRoleArgument(roleNameArgument, message) {
     }
 
     return role;
+}
+
+/**
+ * Get guild roles excluded ids
+ *
+ * @param {string} guildId
+ *
+ * @return {Promise<string[]>}
+ */
+export async function rolesExcluded(guildId) {
+    let rolesExcluded = [];
+
+    try {
+        const excluded = await RolesExcluded.findAll({
+            where: {
+                serverId: guildId
+            }
+        });
+
+        for (let roleExcluded of excluded) {
+            rolesExcluded.push(roleExcluded.roleId);
+        }
+    } catch (exception) {
+        console.log(exception);
+    }
+
+    return rolesExcluded;
 }

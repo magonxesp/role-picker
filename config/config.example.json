@@ -22,6 +22,10 @@
     "RemoveChannelCommand": {
       "success": "",
       "error": ""
+    },
+    "ExcludeRoleCommand": {
+      "success": "",
+      "error": ""
     }
   }
 }
