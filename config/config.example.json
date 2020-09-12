@@ -9,6 +9,9 @@
       "success": "",
       "error": "",
       "in_use": ""
+    },
+    "RoleListCommand": {
+      "success": ""
     }
   }
 }
