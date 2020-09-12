@@ -2,7 +2,8 @@ import { Client } from "discord.js";
 import { root } from "./settings";
 import fs from "fs";
 import path from "path";
-import {ServerTextChannel} from "./models";
+import getEvents from "./event/events";
+import botCommands from "./commands/commands";
 
 /**
  * BotClient Class
@@ -74,7 +75,7 @@ export class BotClient extends Client {
      */
     setupEventListeners(handlers) {
         for (let eventHandler of handlers) {
-            this.on(eventHandler.event, eventHandler.handler.handle)
+            this.on(eventHandler.event, (...args) => eventHandler.handler.handle(...args))
         }
     }
 
@@ -115,6 +116,8 @@ export class BotClient extends Client {
 
 /**
  * BotCommand class
+ *
+ * @interface
  */
 export class BotCommand {
 
@@ -122,16 +125,27 @@ export class BotCommand {
      * BotCommand constructor
      */
     constructor() {
-        this.commandName = "";
+
     }
 
     /**
      * Return the command name whitout prefix
      *
+     * @abstract
      * @returns {string}
      */
     get name() {
-        return this.commandName;
+        throw new Error('not implemented');
+    }
+
+    /**
+     * Return the command description
+     *
+     * @abstract
+     * @returns {string}
+     */
+    get description() {
+        throw new Error('not implemented');
     }
 
     /**
@@ -144,8 +158,11 @@ export class BotCommand {
      *
      * @param {Message} message
      * @param {Array<string>} args
+     * @abstract
      */
-    async run(message, args) { }
+    async run(message, args) {
+        throw new Error('not implemented');
+    }
 
     /**
      * Get command response messages strings
@@ -158,4 +175,25 @@ export class BotCommand {
         return BotClient.config["command_responses"][commandClass];
     }
 
+}
+
+/**
+ * BotClient instance
+ *
+ * @type {BotClient}
+ */
+export const bot = new BotClient();
+
+/**
+ * Setup bot and login
+ */
+export function botBootstrap() {
+    // load bot configuration
+    BotClient.loadConfig();
+    // setup event listeners
+    bot.setupEventListeners(getEvents());
+    // set bot commands
+    bot.setCommands(botCommands());
+    // bot login
+    bot.login(process.env.TOKEN);
 }
