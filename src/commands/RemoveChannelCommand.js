@@ -14,6 +14,10 @@ export default class RemoveChannelCommand extends BotCommand {
         return "Desactiva el evento de enseñar los roles disponibles a un miembro nuevo en este canal";
     }
 
+    get permissions() {
+        return ['ADMINISTRATOR'];
+    }
+
     onLoad() {
         this.#messages = this.getResponseMessages('RemoveChannelCommand');
     }
@@ -37,12 +41,10 @@ export default class RemoveChannelCommand extends BotCommand {
 
     async run(message, args) {
         try {
-            if (message.member.hasPermission("ADMINISTRATOR")) {
-                const removed = await this.removeChannel(message.channel.id, message.guild.id);
+            const removed = await this.removeChannel(message.channel.id, message.guild.id);
 
-                if (removed) {
-                    await message.channel.send(this.#messages.success);
-                }
+            if (removed) {
+                await message.channel.send(this.#messages.success);
             }
         } catch (exception) {
             await message.channel.send(this.#messages.error);

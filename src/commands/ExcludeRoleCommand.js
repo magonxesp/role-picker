@@ -25,29 +25,31 @@ export default class ExcludeRoleCommand extends BotCommand {
         ]);
     }
 
+    get permissions() {
+        return ['ADMINISTRATOR'];
+    }
+
     onLoad() {
         this.#messages = this.getResponseMessages('ExcludeRoleCommand');
     }
 
     async run(message, args) {
-        if (message.member.hasPermission("ADMINISTRATOR")) {
-            const role = parseRoleArgument(args[0], message);
-            const excluded = await rolesExcluded(message.guild.id);
+        const role = parseRoleArgument(args[0], message);
+        const excluded = await rolesExcluded(message.guild.id);
 
-            if (role != null && !excluded.includes(role.id)) {
-                try {
-                    await RolesExcluded.create({
-                        serverId: message.guild.id,
-                        roleId: role.id
-                    });
+        if (role != null && !excluded.includes(role.id)) {
+            try {
+                await RolesExcluded.create({
+                    serverId: message.guild.id,
+                    roleId: role.id
+                });
 
-                    await message.channel.send(sprintf(this.#messages['success'], {
-                        role: role
-                    }));
-                } catch (exception) {
-                    await message.channel.send(this.#messages['error']);
-                    console.log(exception);
-                }
+                await message.channel.send(sprintf(this.#messages['success'], {
+                    role: role
+                }));
+            } catch (exception) {
+                await message.channel.send(this.#messages['error']);
+                console.log(exception);
             }
         }
     }

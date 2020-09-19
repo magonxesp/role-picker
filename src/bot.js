@@ -3,6 +3,7 @@ import { root } from "./settings";
 import fs from "fs";
 import path from "path";
 import BotCommand from "./commands/BotCommand";
+import RunCommand from "./commands/RunCommand";
 
 
 /**
@@ -101,7 +102,8 @@ export class BotClient extends Client {
             const command = this.#commands.filter(command => command.fullName === commandName).shift();
 
             if (typeof command !== 'undefined') {
-                await command.command.run(message, commandArgs);
+                const commandExecutor = new RunCommand(command.command);
+                await commandExecutor.execute(message, commandArgs);
             }
         }
     }

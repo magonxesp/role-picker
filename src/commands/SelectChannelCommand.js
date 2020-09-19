@@ -14,6 +14,10 @@ export default class SelectChannelCommand extends BotCommand {
         return "Enseña la lista de roles disponibles a un miembro nuevo en este canal";
     }
 
+    get permissions() {
+        return ['ADMINISTRATOR'];
+    }
+
     onLoad() {
         this.#messages = this.getResponseMessages('SelectChannelCommand');
     }
@@ -40,14 +44,12 @@ export default class SelectChannelCommand extends BotCommand {
 
     async run(message, args) {
         try {
-            if (message.member.hasPermission("ADMINISTRATOR")) {
-                const saved = await this.saveChannel(message.channel.id, message.guild.id);
+            const saved = await this.saveChannel(message.channel.id, message.guild.id);
 
-                if (saved) {
-                    await message.channel.send(this.#messages.success);
-                } else {
-                    await message.channel.send(this.#messages.in_use);
-                }
+            if (saved) {
+                await message.channel.send(this.#messages.success);
+            } else {
+                await message.channel.send(this.#messages.in_use);
             }
         } catch (exception) {
             await message.channel.send(this.#messages.error);

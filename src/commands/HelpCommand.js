@@ -21,6 +21,10 @@ export default class HelpCommand extends BotCommand {
         ]);
     }
 
+    get alwaysEnabled() {
+        return true;
+    }
+
     /**
      * Send command usage
      *

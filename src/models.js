@@ -32,3 +32,15 @@ export const RolesExcluded = squelize.define('RolesExcluded', {
         allowNull: false
     }
 });
+
+export const ServerCommandsEnabled = squelize.define('ServerCommandsEnabled', {
+    serverId: {
+        type: DataTypes.BIGINT,
+        allowNull: false
+    },
+    enabled: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    }
+});

@@ -46,10 +46,19 @@ export default class BotCommand {
     /**
      * Return the required permissions for execute the command
      *
-     * @returns {Array<string>}
+     * @returns {Array<PermissionResolvable>}
      */
     get permissions() {
         return []
+    }
+
+    /**
+     * Return if command is always enabled
+     *
+     * @return {boolean}
+     */
+    get alwaysEnabled() {
+        return false;
     }
 
     /**
