@@ -43,6 +43,7 @@ export default class SelectRoleCommand extends BotCommand {
                 }));
             }
         } catch (exception) {
+            await message.channel.send(`${exception.name}: ${exception.message}`);
             console.log(exception);
         }
     }
