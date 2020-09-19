@@ -14,6 +14,10 @@ export default class RoleListCommand extends BotCommand {
         return "Lista de roles disponibles";
     }
 
+    get alwaysEnabled() {
+        return true;
+    }
+
     onLoad() {
         this.#messages = this.getResponseMessages('RoleListCommand');
     }
