@@ -1,5 +1,9 @@
 # role-picker-bot
-Discord bot that allow pick role on member guild join event
+Discord bot that allow pick role on member guild join event.
+
+Add to discord server [here](https://discord.com/oauth2/authorize?client_id=730786078499405826&permissions=268957760&scope=bot) (Spanish version)
+
+Use t!help for view the list of commands (in spanish too)
 
 ## Setup
 * Set bot token and database connection settings on ``.env`` file
