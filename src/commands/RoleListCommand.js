@@ -1,4 +1,4 @@
-import { BotCommand } from '../bot';
+import BotCommand from './BotCommand';
 import { asyncRoleFilter } from "../helpers";
 
 

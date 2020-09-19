@@ -1,4 +1,4 @@
-import { BotCommand } from "../bot";
+import BotCommand from "./BotCommand";
 import { RolesExcluded } from "../models";
 import { parseRoleArgument, rolesExcluded } from "../helpers";
 import { sprintf } from "sprintf-js";

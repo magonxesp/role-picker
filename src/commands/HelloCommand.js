@@ -1,4 +1,4 @@
-import { BotCommand } from "../bot";
+import BotCommand from "./BotCommand";
 
 
 export default class HelloCommand extends BotCommand {

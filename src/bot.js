@@ -2,6 +2,7 @@ import { Client } from "discord.js";
 import { root } from "./settings";
 import fs from "fs";
 import path from "path";
+import BotCommand from "./commands/BotCommand";
 
 
 /**
@@ -121,98 +122,6 @@ export class BotClient extends Client {
                 });
             }
         }
-    }
-
-}
-
-/**
- * BotCommand class
- *
- * @interface
- */
-export class BotCommand {
-
-    /**
-     * BotCommand constructor
-     */
-    constructor() {
-
-    }
-
-    /**
-     * Return the command name whitout prefix
-     *
-     * @abstract
-     * @returns {string}
-     */
-    get name() {
-        throw new Error('not implemented');
-    }
-
-    /**
-     * Return the command description
-     *
-     * @abstract
-     * @returns {string}
-     */
-    get description() {
-        throw new Error('not implemented');
-    }
-
-    /**
-     * Return the usage of the command
-     *
-     * @abstract
-     * @returns {string}
-     */
-    get usage() {
-        return '';
-    }
-
-    /**
-     * On command loaded
-     */
-    onLoad() { }
-
-    /**
-     * Run command
-     *
-     * @param {Message} message
-     * @param {Array<string>} args
-     * @abstract
-     */
-    async run(message, args) {
-        throw new Error('not implemented');
-    }
-
-    /**
-     * Get command response messages strings
-     *
-     * @param {string} commandClass
-     *
-     * @return {object}
-     */
-    getResponseMessages(commandClass) {
-        return BotClient.config["command_responses"][commandClass];
-    }
-
-    /**
-     * Returns command arguments help
-     *
-     * @param {Array<{name: string, required: boolean}>} args
-     */
-    arguments(args) {
-        let help = [];
-
-        for (let arg of args) {
-            if (arg.required) {
-                help.push(`${arg.name}`);
-            } else {
-                help.push(`[${arg.name}]`);
-            }
-        }
-
-        return help.join(' ');
     }
 
 }

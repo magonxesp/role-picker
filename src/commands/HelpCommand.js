@@ -1,5 +1,5 @@
-import { BotCommand, bot } from "../bot";
-import {rolesNames} from "../helpers";
+import { bot } from "../bot";
+import BotCommand from './BotCommand';
 
 
 export default class HelpCommand extends BotCommand {
